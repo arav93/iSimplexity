@@ -6,8 +6,11 @@ class TripsController < ApplicationController
 		@trip = Trip.new(trip_params)
 
 	  if @trip.save
-	  	@trip.choose_plan
-	  	render json: { message: 'Success!' }
+	  	if @trip.choose_plan
+	  		render json: { message: 'Success!' }
+	  	else
+	  		render json: { message: 'No plans available!' }
+	  	end
 	  else
 	  	render json: { errors: @trip.errors }, status: :unprocessable_entity
 	  end
